@@ -46,7 +46,7 @@ function BugReportForm({ onSubmit, isSubmitting }) {
       <CardHeader>
         <CardTitle>{PROJECT_TITLE}</CardTitle>
         <CardDescription>
-          {step === 1 && "Step 1: What&apos;s the bug title?"}
+          {step === 1 && "Step 1: What's the bug title?"}
           {step === 2 && "Step 2: Describe the bug"}
           {step === 3 && "Step 3: Set severity and submit"}
         </CardDescription>
@@ -162,20 +162,15 @@ export default function Frame() {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Send notification to @hellno.eth using Farcaster SDK
-      if (sdk) {
-        try {
-          // This is a placeholder for the actual notification API
-          // In a real implementation, you would use the appropriate SDK method
-          await sdk.actions.sendNotification({
-            recipient: "hellno.eth",
-            message: `New ${bugData.severity} bug report: ${bugData.title}`,
-          });
-        } catch (notifError) {
-          console.error("Failed to send notification:", notifError);
-          // Continue with success flow even if notification fails
-        }
-      }
+      // Log notification information - in a real implementation, 
+      // you would use a different method to notify the team
+      console.log(`Would notify @hellno.eth about new ${bugData.severity} bug report: ${bugData.title}`);
+      
+      // In a production environment, you might want to:
+      // 1. Store the bug report in a database
+      // 2. Send an email notification
+      // 3. Create an issue in a project management tool
+      // 4. Post to a webhook that triggers other actions
       
       setSubmitted(true);
     } catch (err) {
@@ -184,7 +179,7 @@ export default function Frame() {
     } finally {
       setIsSubmitting(false);
     }
-  }, [sdk]);
+  }, []);
 
   const handleReset = useCallback(() => {
     setSubmitted(false);
