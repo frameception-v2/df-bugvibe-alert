@@ -17,7 +17,12 @@ import { useFrameSDK } from "~/hooks/useFrameSDK";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
 import { PROJECT_TITLE } from "~/lib/constants";
 
-function BugReportForm({ onSubmit, isSubmitting }) {
+interface BugReportFormProps {
+  onSubmit: (data: { title: string; description: string; severity: string }) => void;
+  isSubmitting: boolean;
+}
+
+function BugReportForm({ onSubmit, isSubmitting }: BugReportFormProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [severity, setSeverity] = useState("medium");
@@ -122,7 +127,11 @@ function BugReportForm({ onSubmit, isSubmitting }) {
   );
 }
 
-function SuccessCard({ onReset }) {
+interface SuccessCardProps {
+  onReset: () => void;
+}
+
+function SuccessCard({ onReset }: SuccessCardProps) {
   return (
     <Card>
       <CardHeader>
@@ -134,7 +143,7 @@ function SuccessCard({ onReset }) {
       <CardContent>
         <p className="text-sm text-muted-foreground">
           A notification has been sent to @hellno.eth on Warpcast.
-          We'll review your report as soon as possible.
+          We&apos;ll review your report as soon as possible.
         </p>
       </CardContent>
       <CardFooter>
@@ -148,9 +157,9 @@ export default function Frame() {
   const { isSDKLoaded, sdk } = useFrameSDK();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = useCallback(async (bugData) => {
+  const handleSubmit = useCallback(async (bugData: { title: string; description: string; severity: string }) => {
     setIsSubmitting(true);
     setError(null);
     
